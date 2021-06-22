@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: main
+    branches: [main]
 
 jobs:
   login:
@@ -11,13 +11,13 @@ jobs:
       - name: Login to ECR
         uses: docker/login-action@v1
         with:
-          registry: 126031290970.dkr.ecr.us-east-2.amazonaws.com/test
+          registry: ${{ secrets.AWS_ECR_REPO_ID }}
           username: ${{ secrets.AWS_ACCESS_KEY_ID }}
           password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Build and tag docker image
-        run: docker build . -t 126031290970.dkr.ecr.us-east-2.amazonaws.com/test --build-arg DATABASE_URL="postgresql://user:password@host:port/db?sslmode=require&pgbouncer=true" --build-arg SESSION_SECRET_KEY="yoursupersecretsessionkey"
+        run: docker build . -t ${{ secrets.AWS_ECR_REPO_ID }} --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} --build-arg SESSION_SECRET_KEY=${{ secrets.SESSION_SECRET_KEY }}
       - name: Push to ECR
-        run: docker push  126031290970.dkr.ecr.us-east-2.amazonaws.com/test
+        run: docker push ${{ secrets.AWS_ECR_REPO_ID }}
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v16
         with:
@@ -27,6 +27,3 @@ jobs:
           environment_name: Test2-env
           version_label: 12345
           region: us-east-2
-
-        
-        
