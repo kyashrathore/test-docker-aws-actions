@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build and tag docker image
-      - run: docker build . -t $AWS_ECR_REPO_URL --build-arg  $DATABASE_URL --build-arg $SESSION_SECRET_KEY
+        run: docker build . -t $AWS_ECR_REPO_URL --build-arg  $DATABASE_URL --build-arg $SESSION_SECRET_KEY
         env: 
            AWS_ECR_REPO_URL: ${{ secrets.AWS_ECR_REPO_URL }}
            DATABASE_URL: ${{ secrets.DATABASE_URL }}
