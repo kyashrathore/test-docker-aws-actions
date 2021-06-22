@@ -18,5 +18,15 @@ jobs:
         run: docker build . -t 126031290970.dkr.ecr.us-east-2.amazonaws.com/test --build-arg DATABASE_URL="postgresql://user:password@host:port/db?sslmode=require&pgbouncer=true" --build-arg SESSION_SECRET_KEY="yoursupersecretsessionkey"
       - name: Push to ECR
         run: docker push  126031290970.dkr.ecr.us-east-2.amazonaws.com/test
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v16
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: test2
+          environment_name: Test2-env
+          version_label: 12345
+          region: us-east-2
+
         
         
