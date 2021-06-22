@@ -22,7 +22,7 @@ ENV NODE_ENV=development
 ENV DATABASE_URL=$DATABASE_URL
 COPY --chown=node:node . .
 RUN yarn install --prefer-offline && yarn cache clean --force \ 
-	&&blitz prisma migrate deploy --preview-feature \
+	&& blitz prisma migrate deploy --preview-feature \
 	&& blitz prisma generate && blitz build
 USER node
 
