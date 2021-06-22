@@ -14,8 +14,10 @@ jobs:
           registry: ${{ secrets.AWS_ECR_REPO_URL }}
           username: ${{ secrets.AWS_ACCESS_KEY_ID }}
           password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Check out the repo
+        uses: actions/checkout@v2
       - name: Build and tag docker image
-        run: docker build ./ -t ${{ secrets.AWS_ECR_REPO_URL }} --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} --build-arg SESSION_SECRET_KEY=${{ secrets.SESSION_SECRET_KEY }}
+        run: docker build . -t ${{ secrets.AWS_ECR_REPO_URL }} --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} --build-arg SESSION_SECRET_KEY=${{ secrets.SESSION_SECRET_KEY }}
       - name: Push to ECR
         run: docker push ${{ secrets.AWS_ECR_REPO_ID }}
       - name: Deploy to EB
