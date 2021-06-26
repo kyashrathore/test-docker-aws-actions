@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  node-app:
+    container_name: node-app
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL:${DATABASE_URL}
+      - SESSION_SECRET_KEY:${SESSION_SECRET_KEY}
+    build:
+      context: ./
+  caddy:
+    container_name: caddy
+    restart: unless-stopped
+    build:
+      context: ./caddy
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - $PWD/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - $PWD/caddy/site:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

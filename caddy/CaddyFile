@@ -1,0 +1,35 @@
+
+:443 {
+  tls {
+    acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+    acme_dns cloudflare VGZPS3_PhtkEtm8Qvq1lnYH-F2hmXHlsojXV5o7q
+    email kanusdlp@gmail.com
+    on_demand
+ }
+}
+
+ *.webprofile.link {
+  reverse_proxy node-app:3000
+  tls {
+    acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+    acme_dns cloudflare VGZPS3_PhtkEtm8Qvq1lnYH-F2hmXHlsojXV5o7q
+    email kanusdlp@gmail.com
+  }
+}
+
+http://*.webprofile.link {
+  redir https://{host}{uri}
+}
+
+webprofile.link {
+  reverse_proxy node-app:3000
+  tls {
+    acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+    acme_dns cloudflare VGZPS3_PhtkEtm8Qvq1lnYH-F2hmXHlsojXV5o7q
+    email kanusdlp@gmail.com
+  }
+}
+
+http://webprofile.link {
+  redir https://{host}{uri}
+}

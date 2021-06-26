@@ -1,6 +1,6 @@
 import { BlitzConfig, sessionMiddleware, simpleRolesIsAuthorized } from "blitz"
 
-const config: BlitzConfig = {
+const config = {
   middleware: [
     sessionMiddleware({
       cookiePrefix: "app",
