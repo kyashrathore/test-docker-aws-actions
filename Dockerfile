@@ -11,12 +11,15 @@ RUN apk add --no-cache tini make g++ python libsodium-dev openssl libtool autoco
 # RUN chmod +x /tini
 USER node
 COPY --chown=node:node package*.json yarn.lock* ./
+RUN npm config set unsafe-perm true
 RUN yarn install --frozen-lockfile --prefer-offline && yarn cache clean --force
 
 # create a build image
 FROM base as build
 ENV NODE_ENV=development
 COPY --chown=node:node . .
+RUN npm config set unsafe-perm true
+
 RUN yarn install --prefer-offline && yarn cache clean --force \ 
 	&&blitz prisma migrate deploy --preview-feature \
 	&& blitz prisma generate && blitz build
@@ -25,6 +28,7 @@ USER node
 # create a production image
 FROM base as prod
 ENV NODE_ENV=production
+RUN npm config set unsafe-perm true
 COPY --chown=node:node --from=build /home/node/app/public /home/node/app/public
 COPY --chown=node:node --from=build /home/node/app/.blitz /home/node/app/.blitz
 COPY --chown=node:node --from=build /home/node/app/db /home/node/app/db
