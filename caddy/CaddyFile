@@ -1,9 +1,13 @@
-
+{
+email kanusdlp@gmail.com
+on_demand_tls {
+  ask node:3000/on_demand_tls
+}
+}
 :443 {
   tls {
-    acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
-    acme_dns cloudflare VGZPS3_PhtkEtm8Qvq1lnYH-F2hmXHlsojXV5o7q
-    email kanusdlp@gmail.com
+    ca https://acme-staging-v02.api.letsencrypt.org/directory
+    dns cloudflare VGZPS3_PhtkEtm8Qvq1lnYH-F2hmXHlsojXV5o7q
     on_demand
  }
 }
@@ -11,9 +15,8 @@
  *.webprofile.link {
   reverse_proxy node-app:3000
   tls {
-    acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
-    acme_dns cloudflare VGZPS3_PhtkEtm8Qvq1lnYH-F2hmXHlsojXV5o7q
-    email kanusdlp@gmail.com
+    ca https://acme-staging-v02.api.letsencrypt.org/directory
+    dns cloudflare VGZPS3_PhtkEtm8Qvq1lnYH-F2hmXHlsojXV5o7q
   }
 }
 
@@ -24,9 +27,8 @@ http://*.webprofile.link {
 webprofile.link {
   reverse_proxy node-app:3000
   tls {
-    acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
-    acme_dns cloudflare VGZPS3_PhtkEtm8Qvq1lnYH-F2hmXHlsojXV5o7q
-    email kanusdlp@gmail.com
+    ca https://acme-staging-v02.api.letsencrypt.org/directory
+    dns cloudflare VGZPS3_PhtkEtm8Qvq1lnYH-F2hmXHlsojXV5o7q
   }
 }
 
